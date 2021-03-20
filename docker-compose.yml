@@ -1,0 +1,10 @@
+version: "3.8"
+
+services: 
+  db:
+    image: postgres
+    restart: always
+    environment: 
+      POSTGRES_PASSWORD: eemeimie6To2iW0geimai5rai6ToomeiwaejohGies7quieNga5zohka6aeLooPe
+      POSTGRES_USER: servicedesk
+      POSTGRES_DB: servicedesk

@@ -1,0 +1,8 @@
+{
+  "name": "servicedesk",
+  "version": "1.0.0",
+  "description": "Manage help tickets",
+  "main": "index.js",
+  "author": "Ken Kauksi <kenssservices@gmail.com>",
+  "license": "MIT"
+}
