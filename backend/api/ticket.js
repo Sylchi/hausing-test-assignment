@@ -1,12 +1,14 @@
-const validators = { //TODO
+const validators = {
   stringNotEmpty: val => {
-    return true;
+    return typeof val === 'string' && val.length > 0;
   },
   email: val => {
-    return true;
+    if(typeof val !== 'string') return false;
+    const re = /\S+@\S+\.\S+/;
+    return re.test(val);
   },
   digitBetween: (val, min, max) => {
-    return true;
+    return typeof val === 'number' && val >= min && val <= max;
   }
 }
 
@@ -42,6 +44,8 @@ const handler = prismaClient => async (req, res, next) => {
         } catch(err){
           console.error(err);
         } 
+      } else {
+        res.send(400);
       }
       console.log(title, email, content, priority ); 
   }
