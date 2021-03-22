@@ -2,25 +2,44 @@
 <main class="content">
   <div class="title">
     <h1>{{content.title}}</h1>
-    <button @click="$store.commit('toggleTicketEditorModal', true)">Create ticket</button>
-    <TickerEditor />
+    <button @click="$store.commit('toggleTicketEditorModal', true)">{{content.createLabel}}</button>
   </div>
+  <Table :columns="columns" :data="$store.state.loadedTickets" />
+  <TickerEditor />
 </main>
 </template>
 
 <script>
+import { useStore } from 'vuex'
 import TickerEditor from '../components/TicketEditor.vue'
+import Table from '../components/Table.vue'
 
   const content = {
-    title: "Service Desk"
+    title: "Service Desk",
+    createLabel: "Create ticket"
   }
+
+  const columns = [{
+    name: "ID",
+    field: 'id',
+  },{
+    name: "Email",
+    field: 'email',
+  },{
+    name: "Title",
+    field: 'title',
+  },{
+    name: "Priority",
+    field: 'priority',
+  }]
 
   export default {
     name: 'Index',
-    components: { TickerEditor },
+    components: { TickerEditor, Table },
     setup() {
-
-      return { content }
+      const store = useStore();
+      store.dispatch('fetchTickets');
+      return { content, columns }
     }
   }
 </script>
