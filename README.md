@@ -17,4 +17,8 @@ Frontend -> Run `Vite build` and upload the resulting dist to your favourite web
 Backend -> Needs to be supplied with at least `DATABASE_URL` environment variable. `PORT` variable optional and by default is set to 3000.
 
 Database -> Currently its using and supports postgresql. Can be changed quite easily.
+## Roadmap
 
+- Authentication
+- Pagination
+- Better test coverage

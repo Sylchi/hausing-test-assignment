@@ -86,6 +86,7 @@ it('allows sorting rows', () => {
       expect(newValue).to.equal('Closed');
     })
   })
+  cy.contains('Created').click();
   cy.get('#app > main > table > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then(currentValue => {
     cy.contains('Created').click();
     cy.get('#app > main > table > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then(newValue => {

@@ -39,8 +39,8 @@ import { reactive, toRefs } from 'vue'
     setup() {
       const state = reactive({
         sort: {
-          fieldName: null,
-          direction: null
+          fieldName: 'createdAt',
+          direction: 'ASC'
         },
       })
 
