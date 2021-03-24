@@ -1,6 +1,8 @@
 export default {
   addTicket: (state, ticket) => {
-    state.loadedTickets.unshift(ticket);
+    const newTickets = [...state.loadedTickets, ticket];
+    state.loadedTickets.splice(0, state.loadedTickets.length);
+    state.loadedTickets.push(...newTickets);
   },
   addTickets: (state, tickets) => {
     state.loadedTickets = tickets;

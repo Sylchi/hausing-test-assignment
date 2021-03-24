@@ -38,7 +38,8 @@ const handler = prismaClient => async (req, res, next) => {
               email: true,
               content: true,
               priority: true,
-              closedAt: true
+              closedAt: true,
+              createdAt: true
             }
           });
           res.json(createdTicket)

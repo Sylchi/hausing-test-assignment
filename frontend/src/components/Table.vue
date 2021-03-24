@@ -2,7 +2,7 @@
 <table>
   <thead>
     <tr>
-      <th v-for="{ name, sort } of columns" :key="name" @click="changeSortingOrder(name)"
+      <th v-for="{ name, sort } of columns" :key="name" @click="!!sort ? changeSortingOrder(name) : ''"
         :style="{
           cursor: !!sort ? 'pointer' : ''
         }"
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { reactive, toRefs, computed } from 'vue'
+import { reactive, toRefs } from 'vue'
 
   export default {
     name: 'Table',
@@ -28,12 +28,12 @@ import { reactive, toRefs, computed } from 'vue'
       columns: Array,
       data: Array
     },
-    setup(props) {
+    setup() {
       const state = reactive({
         sort: {
           fieldName: null,
           direction: null
-        }
+        },
       })
 
       const changeSortingOrder = (name) => {
@@ -45,17 +45,15 @@ import { reactive, toRefs, computed } from 'vue'
         state.sort.fieldName = name;
       }
 
-      const sortedData = computed(() => {
-        if(state.sort.fieldName === null) return props.data;
-        const column = props.columns.find(column => column.name === state.sort.fieldName);
-        if(column === null || typeof column.sort !== 'function') return props.data;
-        if(state.sort.direction === null) state.sort.direction = 'ASC';
-        const clonedData = [...props.data];
-        clonedData.sort(column.sort);
-        return state.sort.direction === 'DESC' ? clonedData.reverse() : clonedData;        
-      })
-
-      return { ...toRefs(state), changeSortingOrder, sortedData }
+      return { ...toRefs(state), changeSortingOrder }
+    },
+    computed: {
+      sortedData() {
+        const column = this.$props.columns.find(column => column.name === this.sort.fieldName);
+        if(!column || typeof column.sort !== 'function') return this.$props.data;
+        const sortedData = [...this.$props.data].sort(column.sort);
+        return this.sort.direction === 'DESC' ? sortedData.reverse() : sortedData;  
+      }
     }
   }
 </script>
