@@ -12,7 +12,7 @@ generator client {
 
 model Ticket {
   id        Int      @default(autoincrement()) @id
-  createdAt DateTime @default(now())
+  createdAt DateTime 
   updatedAt DateTime @updatedAt
   closedAt  DateTime? 
   title     String   @db.VarChar(255)

@@ -7,12 +7,16 @@
           cursor: !!sort ? 'pointer' : ''
         }"
       >{{name}}</th>
+      <th v-if="actions">Actions</th>
     </tr>
   </thead>
   <tbody>
     <tr v-for="[rowIndex, rowData] of Object.entries(sortedData)" :key="rowIndex">
       <td v-for="[columnIndex, { field, format }] of Object.entries(columns)" :key="columnIndex">
         {{format ? format(rowData[field]) : rowData[field]}}
+      </td>
+      <td v-if="actions">
+        <button v-for="action of actions" :key="action" @click="$emit(action, rowData)">{{action}}</button>
       </td>
     </tr>
   </tbody>
@@ -26,7 +30,8 @@ import { reactive, toRefs } from 'vue'
     name: 'Table',
     props: {
       columns: Array,
-      data: Array
+      data: Array,
+      actions: Array
     },
     setup() {
       const state = reactive({

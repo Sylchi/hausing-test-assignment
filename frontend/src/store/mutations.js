@@ -9,5 +9,11 @@ export default {
   },
   toggleTicketEditorModal: (state, value) => {
     state.showTicketEditor = !!value ? value : !state.showTicketEditor;
+  },
+  updateTicket: (state, ticket) => {
+    if(!ticket) return;
+    const ticketToUpdate = state.loadedTickets.find(item => item.id === ticket.id);
+    if(!ticketToUpdate) return;
+    Object.assign(ticketToUpdate, ticket);
   }
 }

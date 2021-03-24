@@ -4,19 +4,28 @@
     <h1>{{content.title}}</h1>
     <button @click="$store.commit('toggleTicketEditorModal', true)">{{content.createLabel}}</button>
   </div>
-  <Table :columns="columns" :data="$store.state.loadedTickets" />
-  <TickerEditor />
+  <Table :columns="columns" :data="$store.state.loadedTickets" :actions="['Edit']" @edit="loadTicketEditorValues" />
+  <TicketEditor ref="ticketEditor" />
 </main>
 </template>
 
 <script>
+import { ref } from 'vue'
 import { useStore } from 'vuex'
-import TickerEditor from '../components/TicketEditor.vue'
+import TicketEditor from '../components/TicketEditor.vue'
 import Table from '../components/Table.vue'
 
   const content = {
     title: "Service Desk",
     createLabel: "Create ticket"
+  }
+
+  const priorityMap = {
+    "1": "Highest",
+    "2": "High",
+    "3": "Medium",
+    "4": "Low",
+    "5": "Lowest"
   }
 
   const columns = [{
@@ -29,7 +38,7 @@ import Table from '../components/Table.vue'
     name: "Created",
     field: 'createdAt',
     sort: (val1, val2) => {
-      new Date(val1).getTime() - new Date(val2).getTime()
+      new Date(val2).getTime() - new Date(val1).getTime()
     },
     format: val => new Date(val).toLocaleDateString()
   },{
@@ -38,23 +47,28 @@ import Table from '../components/Table.vue'
   },{
     name: "Priority",
     field: 'priority',
-    sort: (val1, val2) => val1.priority - val2.priority
+    sort: (val1, val2) => val1.priority - val2.priority,
+    format: val => priorityMap[val.toString()]
   },{
     name: "Status",
     field: 'closedAt',
-    sort: (val1, val2) => { 
-      return (val1 === val2)? 0 : val1? -1 : 1
-    },
+    sort: (val1, val2) => val1.closedAt ? val2.closedAt ? 0 : -1 : 0,
     format: val => !!val ? 'Closed' : 'Open'
   }]
 
   export default {
     name: 'Index',
-    components: { TickerEditor, Table },
+    components: { TicketEditor, Table },
     setup() {
       const store = useStore();
       store.dispatch('fetchTickets');
-      return { content, columns }
+      const ticketEditor = ref(null);
+
+      const loadTicketEditorValues = item => {
+        ticketEditor.value.loadValues(item);
+      }
+
+      return { content, columns, ticketEditor, loadTicketEditorValues }
     }
   }
 </script>

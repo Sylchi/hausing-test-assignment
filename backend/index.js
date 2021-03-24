@@ -9,8 +9,8 @@ const baseUrl = '/api/v1';
 const ticketHandler = require('./api/ticket').handler(prisma);
 
 const routes = {
-  "/tickets":  ticketHandler,
-  "/tickets/:id": ticketHandler
+  "/tickets/:id": ticketHandler,
+  "/tickets":  ticketHandler
 }
 
 const initRoutes = (app) => {
