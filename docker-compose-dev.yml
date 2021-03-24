@@ -8,6 +8,9 @@ services:
       POSTGRES_PASSWORD: test
       POSTGRES_USER: servicedesk_test
       POSTGRES_DB: servicedesk_test
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes: 
+      - postgres_data:/var/lib/postgresql/data/pgdata
   backend:
     image: node:lts
     restart: always
@@ -26,6 +29,8 @@ services:
   frontend:
     image: node:lts
     restart: always
+    depends_on:
+      - backend
     ports: 
       - "4200:4200"
     environment: 
@@ -39,3 +44,4 @@ services:
 volumes:
   node_modules_front:
   node_modules_back:
+  postgres_data:
