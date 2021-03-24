@@ -1,0 +1,36 @@
+version: "3.8"
+
+services: 
+  db:
+    image: postgres
+    restart: always
+    environment: 
+      POSTGRES_PASSWORD: test
+      POSTGRES_USER: servicedesk_test
+      POSTGRES_DB: servicedesk_test
+  backend:
+    image: node:lts
+    restart: always
+    ports: 
+      - "5000:5000"
+    depends_on:
+      - db
+    environment: 
+      PORT: 5000
+      DATABASE_URL: postgresql://servicedesk_test:test@db:5432/servicedesk_test
+    working_dir: /opt/app/backend
+    command: yarn dev
+    volumes:
+      - ./backend:/opt/app/backend:cached
+  frontend:
+    image: node:lts
+    restart: always
+    ports: 
+      - "4200:4200"
+    environment: 
+      PORT: 4200
+      VITE_API_URL: "http://localhost:5000/api/v1"
+    working_dir: /opt/app/frontend
+    command: yarn dev
+    volumes:
+      - ./frontend:/opt/app/frontend:cached

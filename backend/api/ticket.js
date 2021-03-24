@@ -49,7 +49,6 @@ const handler = prismaClient => async (req, res, next) => {
       }
       console.log(title, email, content, priority ); 
   }
-
 }
 
 module.exports = { handler }
