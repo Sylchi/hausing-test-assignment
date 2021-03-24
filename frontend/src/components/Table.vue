@@ -19,6 +19,9 @@
         <button v-for="action of actions" :key="action" @click="$emit(action, rowData)">{{action}}</button>
       </td>
     </tr>
+    <tr v-if="!sortedData || sortedData.length === 0">
+      <td>No data to show</td>
+    </tr>
   </tbody>
 </table>
 </template>
@@ -70,6 +73,10 @@ table{
   text-align: left;
   th, td{
     padding: 5px;
+
+    button{
+      text-transform: capitalize;
+    }
   }
   tr{
     &:nth-child(even){

@@ -1,5 +1,5 @@
 <template>
-<Modal v-show="$store.state.showTicketEditor" @close="$store.commit('toggleTicketEditorModal', false)">
+<Modal v-if="$store.state.showTicketEditor" @close="$store.commit('toggleTicketEditorModal', false)">
   <template v-slot:title>
     {{editing ? ticketClosed ? 'Closed ticket' : 'Edit ticket' : 'New ticket'}}
   </template>
@@ -38,7 +38,7 @@
   </template>
   <template v-slot:actions>
     <button v-if="editing && !ticketClosed" @click="closeTicket">Close ticket</button>
-    <button v-if="!ticketClosed" @click="submitTicket">{{!!values.id ? 'Save changes' : 'Sumbit ticket'}}</button>
+    <button v-if="!ticketClosed" @click="submitTicket">{{!!values.id ? 'Save changes' : 'Submit ticket'}}</button>
   </template>
 </Modal>
 </template>

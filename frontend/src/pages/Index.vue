@@ -4,7 +4,7 @@
     <h1>{{content.title}}</h1>
     <button @click="$store.commit('toggleTicketEditorModal', true)">{{content.createLabel}}</button>
   </div>
-  <Table :columns="columns" :data="$store.state.loadedTickets" :actions="['Edit']" @edit="loadTicketEditorValues" />
+  <Table :columns="columns" :data="$store.state.loadedTickets" :actions="['edit']" @edit="loadTicketEditorValues" />
   <TicketEditor ref="ticketEditor" />
 </main>
 </template>
