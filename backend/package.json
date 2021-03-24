@@ -6,7 +6,7 @@
   "author": "Ken Kauksi <kenssservices@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "npx prisma migrate dev && nodemon index.js"
+    "dev": "yarn && npx prisma migrate dev && nodemon index.js"
   },
   "dependencies": {
     "@prisma/client": "^2.19.0",

@@ -21,7 +21,8 @@ services:
     working_dir: /opt/app/backend
     command: yarn dev
     volumes:
-      - ./backend:/opt/app/backend:cached
+       - ./backend:/opt/app/backend:cached
+       - node_modules_back:/opt/app/backend/node_modules
   frontend:
     image: node:lts
     restart: always
@@ -34,3 +35,7 @@ services:
     command: yarn dev
     volumes:
       - ./frontend:/opt/app/frontend:cached
+      - node_modules_front:/opt/app/frontend/node_modules
+volumes:
+  node_modules_front:
+  node_modules_back:

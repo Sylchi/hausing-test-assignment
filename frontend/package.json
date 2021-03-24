@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "author": "Ken Kauksi <kenssservices@gmail.com>",
   "scripts": {
-    "dev": "vite",
+    "dev": "yarn && vite",
     "build": "vite build",
     "serve": "vite preview"
   },
