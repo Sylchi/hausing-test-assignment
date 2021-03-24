@@ -99,10 +99,13 @@ const fields = [{
       const resetValues = () => state.values = { ...initialValues }
 
       const submitTicket = async () => {
-        const result = state.form.reportValidity();
-        console.log(store)
-        store.dispatch('createTicket', { data: state.values });
-        console.log(result);
+        if(state.form.reportValidity()){
+          const ticket = await store.dispatch('createTicket', { data: state.values });
+          if(ticket) {
+            resetValues();
+            store.commit('toggleTicketEditorModal', false);
+          }
+        }
       } 
 
       return { ...toRefs(state), fields, submitTicket }

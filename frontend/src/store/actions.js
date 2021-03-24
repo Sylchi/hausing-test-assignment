@@ -11,16 +11,21 @@ export default {
     commit('addTickets', tickets);
   },
   createTicket: async ({ commit }, { data, options={}}) => {
-    const createRes = await fetch(`${apiUrl}/tickets`, { 
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-      ...options
-    }).then(res => res.json());
-    commit('addTicket', createRes);
+    try{
+      const ticket = await fetch(`${apiUrl}/tickets`, { 
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+        ...options
+      }).then(res => res.json());
+      commit('addTicket', ticket);
+      return ticket;
+    } catch (err) {
+      return false;
+    }
   },
   updateTicket: ({ commit }, options) => {
 

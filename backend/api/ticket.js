@@ -19,7 +19,7 @@ const handler = prismaClient => async (req, res, next) => {
       if(typeof id === 'number'){
          return res.json(await prismaClient.ticket.findUnique({ where: { id } }));
       } else {
-        const { take, skip, orderBy } = req.params;
+        const { take, skip, orderBy } = req.params; 
         return res.json(await prismaClient.ticket.findMany({
           take, 
           skip, 
@@ -37,11 +37,13 @@ const handler = prismaClient => async (req, res, next) => {
               title: true,
               email: true,
               content: true,
-              priority: true
+              priority: true,
+              closedAt: true
             }
           });
           res.json(createdTicket)
         } catch(err){
+          res.send(500);
           console.error(err);
         } 
       } else {

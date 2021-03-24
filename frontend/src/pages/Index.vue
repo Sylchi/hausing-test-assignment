@@ -26,11 +26,26 @@ import Table from '../components/Table.vue'
     name: "Email",
     field: 'email',
   },{
+    name: "Created",
+    field: 'createdAt',
+    sort: (val1, val2) => {
+      new Date(val1).getTime() - new Date(val2).getTime()
+    },
+    format: val => new Date(val).toLocaleDateString()
+  },{
     name: "Title",
     field: 'title',
   },{
     name: "Priority",
     field: 'priority',
+    sort: (val1, val2) => val1.priority - val2.priority
+  },{
+    name: "Status",
+    field: 'closedAt',
+    sort: (val1, val2) => { 
+      return (val1 === val2)? 0 : val1? -1 : 1
+    },
+    format: val => !!val ? 'Closed' : 'Open'
   }]
 
   export default {
